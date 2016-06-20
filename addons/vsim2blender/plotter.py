@@ -218,13 +218,13 @@ def animate_atom_vibs(atom, qpt, d_vector,
     :type mass: float
     """
 
-    r = atom.location
+    r = atom.location.copy()
 
     if type(end_frame) != int:
         end_frame = start_frame + n_frames - 1
     for frame in range(start_frame, end_frame+1):
         bpy.context.scene.frame_set(frame)
-        exponent = cmath.exp(complex(0, 1) * (r.dot(qpt) -
+        exponent = cmath.exp(-complex(0, 1) * (r.dot(qpt) -
                              2 * math.pi*frame/n_frames))
         norm_displ = Vector(map((lambda y: (y.real)),
                             [x * exponent for x in d_vector]))
